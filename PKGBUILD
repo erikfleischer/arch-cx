@@ -5,7 +5,7 @@
 # Maintainer: William Overstreet <william.ab.overstreet@gmail.com>
 
 pkgname=crossover
-pkgver=14.1.4
+pkgver=15.0.0
 pkgrel=1
 _pkgdebrel=1
 pkgdesc="Run Windows Programs on Linux"
@@ -18,7 +18,7 @@ install=${pkgname}.install
 replaces=('crossover-games' 'crossover-pro' 'crossover-standard')
 
 source=("http://media.codeweavers.com/pub/${pkgname}/cxlinux/demo/${pkgname}_${pkgver}-${_pkgdebrel}.deb")
-sha256sums=('eea3d4e1751c095d4be6fa42ef696b1f2aa487988e9c4b89ff4211de347ca938')
+sha256sums=('b1ce956746d5dae8f21ead6b243e914d480d65513d4669db0e35e84aa764c5a0')
 
 depends=( 
     'python2' 'desktop-file-utils' 'pygtk' 'python2-dbus'
