@@ -2,7 +2,7 @@
 # Contributor: Roland Singer <roland [at] manjaro [dot] org>
 # Contributor: TheBenj <thebenj88 [at] gmail [dot] com>
 # Contributor: Philipp 'TamCore' B. <philipp [at] tamcore [dot] eu>
-# Maintainer: William Overstreet <william.ab.overstreet@gmail.com>
+# Maintainer: Erik Fleischer <erik@erlenweg.de>
 
 pkgname=crossover
 pkgver=15.0.1
