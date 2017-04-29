@@ -22,7 +22,8 @@ sha256sums=('8a440555c8cc047b9c58784924aab4e7c36a3c8925940663af4ae68db5ef4cf9')
 
 # dependency handling wine-style
 depends=(
-  python2
+  python             # Crossover invokes '/usr/bin/python'
+  python2            # and then uses that to start itself in a python2 interpreter.
   pygtk
   python2-dbus
   fontconfig      lib32-fontconfig
