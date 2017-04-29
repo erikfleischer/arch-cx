@@ -22,7 +22,9 @@ sha256sums=('8a440555c8cc047b9c58784924aab4e7c36a3c8925940663af4ae68db5ef4cf9')
 
 # dependency handling wine-style
 depends=(
-  python
+  python2
+  pygtk
+  python2-dbus
   fontconfig      lib32-fontconfig
   lcms2           lib32-lcms2
   libxml2         lib32-libxml2
