@@ -71,7 +71,7 @@ optdepends=(
 # dependency stripping wine-style
 if [[ $CARCH == i686 ]]; then
   # Strip lib32 etc. on i686
-  depends=(${_depends[@]/*32-*/})
+  depends=(${depends[@]/*32-*/})
   optdepends=(${optdepends[@]/*32-*/})
 fi
 
