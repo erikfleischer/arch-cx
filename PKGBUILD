@@ -1,24 +1,23 @@
+# Maintainer: Erik Fleischer <erik [at] erlenweg [dot] de>
 # Contributor: Cian Mc Govern <cian [at] cianmcgovern [dot] com>
 # Contributor: Roland Singer <roland [at] manjaro [dot] org>
 # Contributor: TheBenj <thebenj88 [at] gmail [dot] com>
 # Contributor: Philipp 'TamCore' B. <philipp [at] tamcore [dot] eu>
-# Maintainer: William Overstreet <william.ab.overstreet@gmail.com>
 
 pkgname=crossover
-pkgver=15.0.1
+pkgver=16.2.5
 pkgrel=1
 _pkgdebrel=1
 pkgdesc="Run Windows Programs on Linux"
 arch=('i686' 'x86_64')
 url="http://www.codeweavers.com"
 license=('custom:CrossOver Linux License Grant')
-changelog="CHANGELOG"
 makedepends=('tar')
 install=${pkgname}.install
 replaces=('crossover-games' 'crossover-pro' 'crossover-standard')
 
 source=("http://media.codeweavers.com/pub/${pkgname}/cxlinux/demo/${pkgname}_${pkgver}-${_pkgdebrel}.deb")
-sha256sums=('77cf153ee5f2bcc1d6fbec1b3b33913a8b9e2d43b89902068823be12dd265d52')
+sha256sums=('e3c110f050cf0e87b564580b809d311f5dc5e81fc720448311a696248952ae41')
 
 depends=( 
     'python2' 'desktop-file-utils' 'pygtk' 'python2-dbus'
@@ -46,6 +45,7 @@ optdepends_i686=(
     'libexif: Some applications need to parse EXIF and read their data tags.'
     'libgphoto2: Lets Windows applications access digital cameras.'
     'libldap: Lets Windows applications access LDAP servers.'
+    'libpulse: A featureful, general-purpose sound server (client library).'
     'libxcomposite: This is needed for most CAD-like applications and some games.'
     "libxinerama: This is needed if your display spans multiple screens. If your computer has a single screen then you don't need it."
     'libxml2: This library makes it possible for Windows applications read and write XML files.'
@@ -75,11 +75,11 @@ optdepends_x86_64=(
     'lib32-libdbus: This is needed for Windows applications to automatically detect CD-ROM and USB key insertion.'
     'lib32-libexif: (aur) Some applications need to parse EXIF and read their data tags.'
     'lib32-libldap: Lets Windows applications access LDAP servers.'
+    'lib32-libpulse: A featureful, general-purpose sound server (client library).'
     'lib32-gnutls: This is needed by applications that perform encryption or check online certificates.'
     'lib32-gsm: (aur) Lets Windows applications use the GSM codec for audio compression and decompression.'
     'lib32-gstreamer0.10: (aur) This is needed by some games and multimedia applications.'
     'lib32-gstreamer0.10-base: (aur) This is needed by some games and multimedia applications.'
-    'lib32-libgphoto2: (aur) Lets Windows applications access digital cameras.'
     'lib32-libxcomposite: This is needed for most CAD-like applications and some games.'
     "lib32-libxinerama: This is needed if your display spans multiple screens. If your computer has a single screen then you don't need it."
     'lib32-libxml2: This library makes it possible for Windows applications read and write XML files.'
@@ -88,17 +88,15 @@ optdepends_x86_64=(
     'lib32-libxxf86dga: X11 Direct Graphics Access extension library.' 
     'lib32-mpg123: Needed by some Windows applications to play MP3 files.'
     'lib32-nss-mdns: (aur) host name resolution via mDNS'
-    'lib32-libcl: OpenCL bindings provided by nvidia'
     'lib32-openal: Provides audio support to Windows applications.' 
     'lib32-openssl: This library provides support for secure Internet communication.'
-    'lib32-sane: (aur) Lets Windows applications access scanners.'
     'lib32-v4l-utils: Lets Windows applications access video devices.' 
 )
 
 package() {
     cd ${srcdir}
 
-    ar -p crossover_${pkgver}-${_pkgdebrel}.deb data.tar.gz | tar zxf - -C "${pkgdir}" || return 1
+    ar -p crossover_${pkgver}-${_pkgdebrel}.deb data.tar.xz | tar Jxf - -C "${pkgdir}" || return 1
     if [[ "${CARCH}" = 'i686' ]]; then
         rm -f ${pkgdir}/opt/cxoffice/lib/nsplugin-linux64.so
     fi
@@ -109,7 +107,6 @@ package() {
 
     mv ${pkgdir}/usr/share/doc/crossover/* ${pkgdir}/opt/cxoffice/doc
 
-    gzip -d "${pkgdir}/opt/cxoffice/doc/license.txt.gz"
     rm -r "${pkgdir}/usr"
     sed -e 's!;;"MenuRoot" = ""!"MenuRoot" = "Windows Games"!' \
         -e 's!;;"MenuStrip" = ""!"MenuStrip" = "1"!' \
@@ -132,9 +129,6 @@ package() {
         -e 's!;;"ProductPackage" = ""!"ProductPackage" = "Converted from .deb to pacman."!' \
         -i ${pkgdir}/opt/cxoffice/etc/cxoffice.conf
 
-    # Changelog for pacman -Qc
-    gzip -dfc ${pkgdir}/opt/cxoffice/doc/changelog.Debian.gz > ${startdir}/CHANGELOG
-
     # place license in correct directory
-    install -D -m644 ${pkgdir}/opt/cxoffice/doc/license.txt ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+    install -D -m644 ${pkgdir}/opt/cxoffice/doc/license.txt.gz ${pkgdir}/usr/share/licenses/${pkgname}/license.txt.gz
 }
